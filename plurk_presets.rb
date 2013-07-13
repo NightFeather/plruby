@@ -31,12 +31,13 @@ end
 def console
     $flag = true
     while $flag
-        xx = ANSIC::ConColor "YEL"
+        xx = ConColor "YEL"
         xx += "PlurbyBot>"
-        xx += ANSIC::ConColor()
+        xx += ConColor()
+        print xx
         cmd = gets.chomp
         parsedCmd = cmd.split
-        case ParsedCmd[0]
+        case parsedCmd[0]
             when "post", "Post", "POST"
                  content = parsedCmd[1]
                  cmdl = parsedCmd.length
@@ -49,9 +50,9 @@ def console
                  end
                  post(content)
             when "exit", "Exit", "q", "quit", "Quit"
-                puts ANSIC::ConColor("CYN") + "exiting...." + ANSIC::ConColor()
+                puts ConColor("CYN") + "exiting...." + ConColor()
                 $flag = false
-            else puts ANSIC::ConColor("RED") + "Command not found" + ANSIC::ConColor()
+            else puts ConColor("RED") + "Command not found" + ConColor()
         end
     end
 end
