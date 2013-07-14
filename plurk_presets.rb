@@ -41,7 +41,7 @@ def console
             when "post", "Post", "POST"
                  content = parsedCmd[1]
                  cmdl = parsedCmd.length
-                 if cmdl === (2..4)
+                 if cmdl > 2
                     i = 2
                     while cmdl > i
                         content = content + " " + parsedCmd[i]
