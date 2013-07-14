@@ -12,7 +12,7 @@ module Consts
     Uid = '7686915'
 end
 
-def post(c ,q = nil ,l = nil)
+def ppost(c ,q = nil ,l = nil)
     @c, @q, @l = c, q, l
     if @q == nil
     @q = ":"
@@ -48,7 +48,7 @@ def console
                         i += 1
                     end
                  end
-                 post(content)
+                 ppost(content)
             when "exit", "Exit", "q", "quit", "Quit"
                 puts ConColor("CYN") + "exiting...." + ConColor()
                 $flag = false

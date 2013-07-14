@@ -8,4 +8,4 @@ $plurk = Plurk.new(Consts::Apk, Consts::Aps)
 
 $plurk.authorize(Consts::Act, Consts::Acs)
 
-post("這是測試噗")
+ppost("這是測試噗")

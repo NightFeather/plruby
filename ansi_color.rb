@@ -8,15 +8,14 @@ BLU = 34
 MAG = 35
 CYN = 36
 WHI = 37
-def ConColor (f, b=nil, s=nil)
-    s, f, b = @s, @f, @b
+def ConColor (f = nil, b = nil, s = nil)
+     @s, @f, @b = s, f, b
     output = CSI
     if @s
         output += @s.to_s + ';'
     end
     if @f
         output += case @f
-                    when /ORG/ then ORG.to_s
                     when /RED/ then RED.to_s
                     when /GRE/ then GRE.to_s
                     when /YEL/ then YEL.to_s
