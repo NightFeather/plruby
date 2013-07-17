@@ -28,7 +28,7 @@ class Log
         end
     end
 end
-    
+
 def ppost(c ,q = nil ,l = nil)
     @c, @q, @l = c, q, l
     if @q == nil
