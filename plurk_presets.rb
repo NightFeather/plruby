@@ -3,14 +3,7 @@ require 'json'
 require 'oauth'
 require './plurk.rb'
 require './ansi_color.rb'
-
-module Consts
-    Apk = '75GrviCFSdd0'
-    Aps = 'ENl7LJ4mtFBzcTcIvvygbZwMKTVTw3Tu'
-    Act = '4Xd9OGwqMcVs'
-    Acs = 'YgI4j5m8VLNDNqSZmVa98orlu0iVtNee'
-    Uid = '7686915'
-end
+require './constants.rb'
 
 def ppost(c ,q = nil ,l = nil)
     @c, @q, @l = c, q, l
