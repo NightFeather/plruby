@@ -9,5 +9,7 @@ $plurk = Plurk.new(Consts::Apk, Consts::Aps)
 
 $plurk.authorize(Consts::Act, Consts::Acs)
 
+
+
 terminal = Terminal.new
 terminal.console

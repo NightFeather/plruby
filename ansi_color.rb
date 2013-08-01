@@ -40,3 +40,12 @@ def ConColor (f = nil, b = nil, s = nil)
     output += 'm'
     return output
 end
+
+#顏色對應:
+#   紅色  Error message
+#   綠色  tip 
+#   黃色  prompt
+#   藍色  (unused)
+#   紫色  (unused)
+#   青色  general message
+#   白色  (unused)

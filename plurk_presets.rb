@@ -37,7 +37,8 @@ def ppost(c ,q = nil ,l = nil)
     if @l == nil
         @l = "tr_ch"
     end
-    $plurk.post('/APP/Timeline/plurkAdd',{:content=>@c, :qualifier=>@q, :lang=>@l},)
+    json = $plurk.post('/APP/Timeline/plurkAdd',{:content=>@c, :qualifier=>@q, :lang=>@l},)
+    p json
 end
 
 def resp(id, c, q)
@@ -69,6 +70,8 @@ class Terminal
                         print ConColor("GRE") + "Usage: post <content> [modifier]" + ConColor() + "\n"
                         print ConColor("GRE") + "content must be quoted" + ConColor() + "\n"
                      end
+                when "STOP", "stop", "Stop"
+                    
                 when "exit", "Exit", "q", "quit", "Quit"
                     puts ConColor("CYN") + "exiting...." + ConColor()
                     $flag = false
