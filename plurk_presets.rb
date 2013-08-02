@@ -4,31 +4,6 @@ require 'oauth'
 require './plurk.rb'
 require './ansi_color.rb'
 
-class Log
-    def initialize
-        @tname = Time.new
-        @fname = "plurbybot-%04d%02d%02d.log" % [ @tname.year, @tname.mon, @tname.day]
-        @f = File.new(@fname,"a+")
-    end
-    def logger( n = nil )
-        if n
-           @log += n.to_s + "\n"
-           return 0
-        else
-           return @log
-        end
-    end
-    def write
-        if @log
-            @tline = Time.new
-            @log  = "==%02d:%02d:%02d==\n" % [ @tline.hour, @tline.min, @tline.sec ] + @log
-            @log += "========end=======\n"
-            @f.write(@log)
-            @log = nil
-        end
-    end
-end
-
 def ppost(c ,q = nil ,l = nil)
     @c, @q, @l = c, q, l
     if @q == nil
@@ -45,6 +20,8 @@ def resp(id, c, q)
     @id, @c, @q = id, c, q
     $plurk.post('/APP/Responses/responseAdd',{:id=>@id, :content=>@c, :qualifier=>@q},)
 end
+
+#大部分的終端機控制
 class Terminal
     def initialize ( prompt = nil )
         @prompt = prompt
@@ -53,11 +30,12 @@ class Terminal
         end
         @prompt = ConColor("YEL") + @prompt + " " + ConColor()
     end
+    #預定作為背景資訊緩衝
     def queue(mesg)
     end
+    #主要的指令io控制
     def console
-    $flag = true
-        while $flag
+        while true
             print @prompt
             cmd = gets.chomp
             parsedCmd = cmd.split (/ "|" |"$/)
@@ -74,7 +52,7 @@ class Terminal
                     
                 when "exit", "Exit", "q", "quit", "Quit"
                     puts ConColor("CYN") + "exiting...." + ConColor()
-                    $flag = false
+                    break
                 else puts ConColor("RED") + "Command not found" + ConColor()
             end
         end
