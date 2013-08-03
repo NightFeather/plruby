@@ -30,14 +30,11 @@ class Terminal
         end
         @prompt = ConColor("YEL") + @prompt + " " + ConColor()
     end
-    #預定作為背景資訊緩衝
-    def queue(mesg)
-    end
     #主要的指令io控制
     def console
         while true
             print @prompt
-            cmd = gets.chomp
+            cmd = readline.chomp
             parsedCmd = cmd.split (/ "|" |"$/)
             case parsedCmd[0]
                 when "post", "Post", "POST"
@@ -48,6 +45,8 @@ class Terminal
                         print ConColor("GRE") + "Usage: post <content> [modifier]" + ConColor() + "\n"
                         print ConColor("GRE") + "content must be quoted" + ConColor() + "\n"
                      end
+                when "Log", "LOG", "log"
+                     print logger()
                 when "STOP", "stop", "Stop"
                     
                 when "exit", "Exit", "q", "quit", "Quit"
