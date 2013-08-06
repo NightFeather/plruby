@@ -3,6 +3,8 @@ require 'json'
 require 'oauth'
 require './plurk.rb'
 require './ansi_color.rb'
+require './action.rb'
+require './log.rb'
 
 def ppost(c ,q = nil ,l = nil)
     @c, @q, @l = c, q, l
@@ -25,7 +27,9 @@ end
 class Terminal
     def initialize ( prompt = nil )
         @prompt = prompt
-        if !@prompt
+        @tid = nil
+        $log = Log.new
+        unless @prompt
             @prompt = "PlurbyBot>"
         end
         @prompt = ConColor("YEL") + @prompt + " " + ConColor()
@@ -46,9 +50,22 @@ class Terminal
                         print ConColor("GRE") + "content must be quoted" + ConColor() + "\n"
                      end
                 when "Log", "LOG", "log"
-                     print logger()
+                     print $log.logger()
+                when "Start", "start", "START"
+                     unless @tid
+                        puts "Starting Worker thread"
+                        @tid = worker
+                        sleep 0.01
+                     else
+                        puts "there's a thread already running!!"
+                     end
                 when "STOP", "stop", "Stop"
-                    
+                    begin
+                        @tid.kill
+                        @tid = nil
+                    rescue
+                        puts "No Working thread to Stop!! \nAre you sure there's a thread running?"
+                    end
                 when "exit", "Exit", "q", "quit", "Quit"
                     puts ConColor("CYN") + "exiting...." + ConColor()
                     break

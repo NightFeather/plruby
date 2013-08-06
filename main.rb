@@ -4,6 +4,7 @@ require 'oauth'
 require './plurk.rb'
 require './plurk_presets.rb'
 require './constants.rb'
+require './log.rb'
 
 $plurk = Plurk.new(Consts::Apk, Consts::Aps)
 
