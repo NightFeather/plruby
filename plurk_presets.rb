@@ -53,18 +53,18 @@ class Terminal
                      print $log.logger()
                 when "Start", "start", "START"
                      unless @tid
-                        puts "Starting Worker thread"
-                        @tid = worker
-                        sleep 0.01
+                    puts "Starting Worker thread"
+                    @tid = worker
+                    sleep 0.01
                      else
-                        puts "there's a thread already running!!"
+                    puts "there's a thread already running!!"
                      end
                 when "STOP", "stop", "Stop"
                     begin
-                        @tid.kill
-                        @tid = nil
+                    @tid.kill
+                    @tid = nil
                     rescue
-                        puts "No Working thread to Stop!! \nAre you sure there's a thread running?"
+                    puts "No Working thread to Stop!! \nAre you sure there's a thread running?"
                     end
                 when "exit", "Exit", "q", "quit", "Quit"
                     puts ConColor("CYN") + "exiting...." + ConColor()
