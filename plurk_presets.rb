@@ -41,7 +41,7 @@ class Terminal
             cmd = readline.chomp
             parsedCmd = cmd.split (/ "|" |"$/)
             case parsedCmd[0]
-                when "post", "Post", "POST"
+                when /post/i
                      if parsedCmd[1]
                         content = parsedCmd[1]
                         ppost(content,parsedCmd[2])
@@ -49,9 +49,9 @@ class Terminal
                         print ConColor("GRE") + "Usage: post <content> [modifier]" + ConColor() + "\n"
                         print ConColor("GRE") + "content must be quoted" + ConColor() + "\n"
                      end
-                when "Log", "LOG", "log"
+                when /log/i
                      print $log.logger()
-                when "Start", "start", "START"
+                when /start/i
                      unless @tid
                     puts "Starting Worker thread"
                     @tid = worker
@@ -59,17 +59,26 @@ class Terminal
                      else
                     puts "there's a thread already running!!"
                      end
-                when "STOP", "stop", "Stop"
+                when /stop/i
                     begin
-                    @tid.kill
-                    @tid = nil
+                     @tid.kill
+                     @tid = nil
                     rescue
-                    puts "No Working thread to Stop!! \nAre you sure there's a thread running?"
+                     puts "No Working thread to Stop!! \nAre you sure there's a thread running?"
                     end
-                when "exit", "Exit", "q", "quit", "Quit"
+                when /help/i
+                     print ConColor("GRE") + "post  => Plurks a message" +  ConColor() + "\n"
+                     print ConColor("GRE") + "log   => Show log" +  ConColor() + "\n"
+                     print ConColor("GRE") + "start => Start a bot thread" +  ConColor() + "\n"
+                     print ConColor("GRE") + "stop  =>  Stop a working thread" +  ConColor() + "\n"
+                     print ConColor("GRE") + "exit  => Leave this console" +  ConColor() + "\n"
+                     print ConColor("GRE") + "help  => Show this message" +  ConColor() + "\n"
+                when /exit/i
                     puts ConColor("CYN") + "exiting...." + ConColor()
                     break
-                else puts ConColor("RED") + "Command not found" + ConColor()
+                else 
+                    puts ConColor("RED") + "Command not found." + ConColor()
+                    puts ConColor("GRE") + "Enter \"help\" for avalible command list."  + ConColor()
             end
         end
     end
