@@ -39,7 +39,7 @@ class Terminal
         while true
             print @prompt
             cmd = readline.chomp
-            parsedCmd = cmd.split (/ "|" |"$/)
+            parsedCmd = (cmd.scan /(\w+)|"([\w\s]+?)"/).flatten.compact
             case parsedCmd[0]
                 when /post/i
                      if parsedCmd[1]
@@ -53,11 +53,11 @@ class Terminal
                      print $log.logger()
                 when /start/i
                      unless @tid
-                    puts "Starting Worker thread"
-                    @tid = worker
-                    sleep 0.01
+                        puts "Starting Worker thread"
+                        @tid = worker
+                        sleep 0.01
                      else
-                    puts "there's a thread already running!!"
+                        puts "there's a thread already running!!"
                      end
                 when /stop/i
                     begin

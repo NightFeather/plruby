@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby 
 # encoding: utf-8
 require 'json'
 require 'oauth'
@@ -11,6 +12,7 @@ $plurk = Plurk.new(Consts::Apk, Consts::Aps)
 $plurk.authorize(Consts::Act, Consts::Acs)
 
 
-
-terminal = Terminal.new
-terminal.console
+unless ARGV[0]
+    terminal = Terminal.new
+    terminal.console
+end
