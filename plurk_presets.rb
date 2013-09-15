@@ -26,9 +26,9 @@ end
 #大部分的終端機控制
 class Terminal
     def initialize ( prompt = nil )
+        $log.logger "Terminal Interface Started."
         @prompt = prompt
         @tid = nil
-        $log = Log.new
         unless @prompt
             @prompt = "PlurbyBot>"
         end
@@ -51,29 +51,40 @@ class Terminal
                      end
                 when /log/i
                      print $log.logger()
-                when /start/i
-                     unless @tid
-                        puts "Starting Worker thread"
-                        @tid = worker
-                        sleep 0.01
+#Need to be rewrite
+                when /start/i 
+                    if parsedCmd[1]
+                        unless @tid
+                           puts "Starting Worker thread"
+                           @tid = worker parsedCmd[1]
+                           sleep 0.01
+                         else
+                            puts "there's a thread already running!!"
+                         end
                      else
-                        puts "there's a thread already running!!"
+                        print ConColor("GRE")  +  "Please specify an argument to detemine which type of work to go!" + ConColor() + "\n"
                      end
+#Need to be rewrite
                 when /stop/i
                     begin
                      @tid.kill
                      @tid = nil
                     rescue
-                     puts "No Working thread to Stop!! \nAre you sure there's a thread running?"
+                     print ConColor("GRE") + "No Working thread to Stop!! \nAre you sure there's a thread running?" + ConColor() + "\n"
                     end
+                when /list/i
+                    p @tid
+                    print "\n"
                 when /help/i
                      print ConColor("GRE") + "post  => Plurks a message" +  ConColor() + "\n"
                      print ConColor("GRE") + "log   => Show log" +  ConColor() + "\n"
                      print ConColor("GRE") + "start => Start a bot thread" +  ConColor() + "\n"
-                     print ConColor("GRE") + "stop  =>  Stop a working thread" +  ConColor() + "\n"
+                     print ConColor("GRE") + "stop  => Stop a working thread" +  ConColor() + "\n"
                      print ConColor("GRE") + "exit  => Leave this console" +  ConColor() + "\n"
                      print ConColor("GRE") + "help  => Show this message" +  ConColor() + "\n"
                 when /exit/i
+                    $log.logger ("Terminal Interface Ended.")
+                    $log.write
                     puts ConColor("CYN") + "exiting...." + ConColor()
                     break
                 else 

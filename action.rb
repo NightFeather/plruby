@@ -6,48 +6,46 @@ def autoReplurk (off)
     post("/APP/Polling/getPlurks",{:offset => @off})
 end
 
-def hourlytest (in_str)
+def testing (in_str = nil)
     if in_str
         @in_str = in_str.to_s
     else
-        @in_str = "先試跑 每小時來一次\n 雖然我覺得這種程度的功能\n 用 crontab 還比較方便[oh]"
+        @in_str = "嗚嚕[oh]"
     end
     while true 
         begin
         time = Time.new
-            if time.min == 0
+            if time.hour%4 ==0 && time.min == 0
                 ppost(@in_str)
-                sleep 3600
+                sleep 60
             end
         rescue
             $log.logger("Hourly post failed. Network issue?")
-            sleep 3600
+            sleep 60
         end
     end
+    $log.logger("Testing Work Self Ended.")
 end
 
 def parseTime( org )
     return @ptime = "%04d-%02d%02dT%02d:%02d:%02d" % [org.year,org.mon,org.day,org.hour,org.min,org.sec]
 end
+
 def worker(n)
     begin
         @tid = Thread.new {
             puts ConColor("CYN") + "Online!!" + ConColor()
                 case n
-                    when 1
-                        hourlytest
-                    when 2
+                    when /1/
+                        testing
+                    when /2/
                         while true
                             begin
-                                @dummy = 0
                                 time = Time.new
                                 otime = parseTime(time)
                                 autoReplurk
-                                if time.hour % 2 ==0
-                                    $log.write
-                                end
                                 sleep 10
-                             rescue
+                            rescue
                                 @dummy += 1
                                 sleep 50
                                 if @dummy < 5
@@ -56,10 +54,10 @@ def worker(n)
                                     $log.logger("Something Wrong With AutoReplurk. Check net connection!")
                                     break
                                 end
-                             end
+                            end
                         end
                     else
-                        puts("Syntax Error")
+                        puts "Syntax Error"
                 end
         }
         return @tid
