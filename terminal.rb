@@ -9,6 +9,7 @@ class Terminal
     def initialize (prompt = "PlurbyBot>")
         @prompt = prompt
         $log.logger "Terminal Interface Started."
+        $thread_list = {}
     end
     def out ( input , hcolor = "GRE" ,n=1)
         print ConColor(hcolor) + input.to_s + ConColor() + ("\n"*n)
@@ -33,6 +34,9 @@ class Terminal
                 worker(parsedCmd[1],parsedCmd[2..-1])
             when /stop/i
             when /list/i
+                $thread_list.each_pair do |name,stat| 
+                    puts "%s\t%s" % [name,stat.status]
+                end
             when /log/i
                 print $log.logger
             when /help/i
