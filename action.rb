@@ -49,6 +49,7 @@ def testing (in_str = [])
     @tid = Thread.new {
                     while true 
                         begin
+                            $plurk.post("Errr, Something Online?")
                             time = Time.new
                             if time.hour%(24/@base) ==0 && time.min == 0
                                 $plurk.post(@in_str[time.hour/(24/@base)])
