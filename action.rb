@@ -61,6 +61,7 @@ def testing (in_str = [])
                         end
                     end
                     $log.logger("Testing Work Self Ended.")
+                    $plurk.post("Errr, Something Offline?")
                 }
     return @tid
 end
