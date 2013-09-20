@@ -33,6 +33,14 @@ class Terminal
             when /start/i
                 worker(parsedCmd[1],parsedCmd[2..-1])
             when /stop/i
+                case parsedCmd[1]
+                 when /1/
+                  $thread_list["Karma_Hold"].kill
+                 when /2/
+                  $thread_list["aResp"].kill
+                 else
+                  out "Syntax Error" ,"RED"
+                end
             when /list/i
                 $thread_list.each_pair do |name,stat| 
                     puts "%s\t%s" % [name,stat.status]

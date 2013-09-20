@@ -1,8 +1,9 @@
 # encoding: utf-8
 require './ansi_color.rb'
+require './log.rb'
 
 def parseTime( org )
-    return @ptime = "%04d-%02d%02dT%02d:%02d:%02d" % [org.year,org.mon,org.day,org.hour,org.min,org.sec]
+    return @ptime = "%04d-%02d%02dT%02d:%02d:%02d" % [org.year,org.mon,org.day,org.hour,(org.min-5),org.sec]
 end
 
 def readFile
@@ -38,7 +39,7 @@ def autoReplurk
     return @tid
 end
 
-def testing (in_str = nil)
+def testing (in_str = [])
     if in_str.length
         @in_str = in_str
     else
@@ -50,7 +51,7 @@ def testing (in_str = nil)
                         begin
                             time = Time.new
                             if time.hour%(24/@base) ==0 && time.min == 0
-                                $plurk.post(@in_str[time.hour%(24/@base)])
+                                $plurk.post(@in_str[time.hour/(24/@base)])
                                 sleep 60
                             end
                         rescue
@@ -62,7 +63,7 @@ def testing (in_str = nil)
                 }
     return @tid
 end
-
+#/
 def worker( n , *a )
     begin
         puts ConColor("CYN") + "Online!!" + ConColor()
@@ -70,9 +71,11 @@ def worker( n , *a )
             when /1/
                 $wname = "Karma_Hold"
                 @wid = testing a
+                $log.logger("Karma_Hold Started with patterns : %s " % [a.join])
             when /2/
                 $wname = "aResp"
                 @wid = autoReplurk
+                $log.logger("aResp Started.")
             else
                 puts "Syntax Error"
         end
