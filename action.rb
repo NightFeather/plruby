@@ -57,8 +57,8 @@ def testing (in_str)
                             if time.hour%(24/@base) ==0 && time.min == 0
                                 $plurk.post(@in_str[time.hour/(24/@base)])
                                 @dummy = 0
-                                sleep 60
                             end
+                                sleep 60
                         rescue
                             @dummy += 1
                             $log.logger("Hourly post failed. Network issue?")
