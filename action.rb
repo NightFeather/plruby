@@ -20,6 +20,7 @@ def readFile
 end
 
 def autoReplurk
+    $log.logger("aResp Started.")
     readFiles
     @tid = Thread.new {
                         while true
@@ -69,15 +70,15 @@ end
 #/
 def worker( n , *a )
     begin
-        puts ConColor("CYN") + "Online!!" + ConColor()
         case n
             when /1/
+                puts ConColor("CYN") + "Online!!" + ConColor()
                 $wname = "Karma_Hold"
                 @wid = testing a
             when /2/
+                puts ConColor("CYN") + "Online!!" + ConColor()
                 $wname = "aResp"
                 @wid = autoReplurk
-                $log.logger("aResp Started.")
             else
                 puts "Syntax Error"
         end
