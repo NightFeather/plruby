@@ -47,6 +47,7 @@ class Plurk
     
     def post(content ,qualifier = ":" ,lang = "tr_ch")
         @content, @qualifierualifier, @lang = content, qualifier, lang
+        $log.logger ("posted a message \"%s\"" % [@content])
         json = $plurk.req('/APP/Timeline/plurkAdd',{:content=>@content, :qualifier=>@qualifier, :lang=>@lang},)
     end
     

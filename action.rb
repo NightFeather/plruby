@@ -46,10 +46,11 @@ def testing (in_str = [])
         @in_str = ["嗚嚕[oh]","呼嚕[cat]","姆嚕[nu]","咕嚕[goro]"]
     end
     @base = @in_str.length > 24 ? 24 : @in_str.length
+    $log.logger("Karma_Hold Started with patterns : %s " % [a.join])
     @tid = Thread.new {
+                    $plurk.post("Errr, Something Online?")
                     while true 
                         begin
-                            $plurk.post("Errr, Something Online?")
                             time = Time.new
                             if time.hour%(24/@base) ==0 && time.min == 0
                                 $plurk.post(@in_str[time.hour/(24/@base)])
@@ -73,7 +74,6 @@ def worker( n , *a )
             when /1/
                 $wname = "Karma_Hold"
                 @wid = testing a
-                $log.logger("Karma_Hold Started with patterns : %s " % [a.join])
             when /2/
                 $wname = "aResp"
                 @wid = autoReplurk

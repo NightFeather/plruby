@@ -25,7 +25,6 @@ class Terminal
                 if parsedCmd[1]
                     content = parsedCmd[1]
                     $plurk.post(content,parsedCmd[2])
-                    $log.logger ("posted a message \"%s\"" % [content])
                  else
                     out "Usage: post <content> [modifier]"
                     out "content must be quoted"
