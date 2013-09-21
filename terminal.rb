@@ -35,8 +35,10 @@ class Terminal
                 case parsedCmd[1]
                  when /1/
                   $thread_list["Karma_Hold"].kill
+                  $thread_list.delete "Karma_Hold"
                  when /2/
                   $thread_list["aResp"].kill
+                  $thread_list.delete "aResp"
                  else
                   out "Syntax Error" ,"RED"
                 end

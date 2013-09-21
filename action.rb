@@ -40,24 +40,27 @@ def autoReplurk
     return @tid
 end
 
-def testing (in_str = [])
-    if in_str.length
-        @in_str = in_str
+def testing (in_str)
+    @dummy = 0
+    if in_str
+        @in_str = in_str.length > 0 ? in_str :  ["嗚嚕[oh]","呼嚕[cat]","姆嚕[nu]","咕嚕[goro]"]
     else
         @in_str = ["嗚嚕[oh]","呼嚕[cat]","姆嚕[nu]","咕嚕[goro]"]
     end
     @base = @in_str.length > 24 ? 24 : @in_str.length
-    $log.logger("Karma_Hold Started with patterns : %s " % [@in_str.join])
+    $log.logger("Karma_Hold Started with patterns : %s " % [(@in_str.join " ")])
     @tid = Thread.new {
                     $plurk.post("Errr, Something Online?")
-                    while true 
+                    while @dummy <5
                         begin
                             time = Time.new
                             if time.hour%(24/@base) ==0 && time.min == 0
                                 $plurk.post(@in_str[time.hour/(24/@base)])
+                                @dummy = 0
                                 sleep 60
                             end
                         rescue
+                            @dummy += 1
                             $log.logger("Hourly post failed. Network issue?")
                             sleep 60
                         end
@@ -68,21 +71,18 @@ def testing (in_str = [])
     return @tid
 end
 #/
-def worker( n , *a )
+def worker( n , a = nil )
     begin
         case n
             when /1/
                 puts ConColor("CYN") + "Online!!" + ConColor()
-                $wname = "Karma_Hold"
-                @wid = testing a
+                $thread_list["Karma_Hold"] = testing a
             when /2/
                 puts ConColor("CYN") + "Online!!" + ConColor()
-                $wname = "aResp"
-                @wid = autoReplurk
+                $thread_list["aResp"] = autoReplurk
             else
                 puts "Syntax Error"
         end
-        $thread_list[$wname] = @wid
     rescue
         puts "Unable to Start the worker thread. Please Try again!"
     end
