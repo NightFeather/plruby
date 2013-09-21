@@ -47,7 +47,7 @@ def testing (in_str = [])
         @in_str = ["嗚嚕[oh]","呼嚕[cat]","姆嚕[nu]","咕嚕[goro]"]
     end
     @base = @in_str.length > 24 ? 24 : @in_str.length
-    $log.logger("Karma_Hold Started with patterns : %s " % [a.join])
+    $log.logger("Karma_Hold Started with patterns : %s " % [@in_str.join])
     @tid = Thread.new {
                     $plurk.post("Errr, Something Online?")
                     while true 
