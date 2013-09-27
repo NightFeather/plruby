@@ -20,6 +20,7 @@ def readFile
                 $all_pattern[@loadin] << line
         end
     end
+    p $all_pattern
 end
 
 def autoReplurk
