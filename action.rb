@@ -36,7 +36,7 @@ def autoReplurk
                             @returnPlurk["plurks"].each do |got| 
                                 $all_pattern.each_key do |key|
                                     if got["content_raw"] =~ /#{key}/
-                                        $plurk.resp(got["plurk_id"],rand(all_pattern[key].lengh))
+                                        $plurk.resp(got["plurk_id"],all_pattern[key][rand(all_pattern[key].lengh)])
                                     end
                                 end
                             end
