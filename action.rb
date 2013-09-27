@@ -3,7 +3,7 @@ require './ansi_color.rb'
 require './log.rb'
 
 def parseTime( org )
-    return @ptime = "%04d-%02d%02dT%02d:%02d:%02d" % [org.year,org.mon,org.day,org.hour,(org.min-5),org.sec]
+    return @ptime = "%04d-%02d-%02dT%02d:%02d:%02d" % [org.year,org.mon,org.day,org.hour,(org.min-5),org.sec]
 end
 
 def readFile
