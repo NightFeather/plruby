@@ -11,17 +11,19 @@ def readFile
     @loadin = ""
     @file = File.new("patterns.hey","r")
     @file.each_line do |line|
-        if /^==/ =~ line
-            @loadin = line[2..-1]
-        else
-            $all_pattern[@loadin] << line
+        case line
+            when /^==/
+                @loadin = line[2..-1]
+            when /^#/
+            else
+                $all_pattern[@loadin] << line
         end
     end
 end
 
 def autoReplurk
     $log.logger("aResp Started.")
-    readFiles
+    readFile
     @tid = Thread.new {
                         while true
                             @t = Time.new
