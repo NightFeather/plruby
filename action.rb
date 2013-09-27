@@ -11,8 +11,10 @@ def readFile
     @loadin = ""
     @file = File.new("patterns.hey","r")
     @file.each_line do |line|
+        line.chomp!
         case line
             when /^==/
+                $all_pattern[@loadin].flatten.compact
                 @loadin = line[2..-1]
                 $all_pattern[@loadin] = []
             when /^#/
