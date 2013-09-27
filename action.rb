@@ -27,8 +27,8 @@ def autoReplurk
     readFile
     @tid = Thread.new {
                         while true
-                            @t = Time.new
-                            @off = parseTime( @t.utc )
+                            @off = parseTime( (Time.new).utc )
+                            sleep 2
                             @returnPlurk = $plurk.req("/APP/Polling/getPlurks",{:offset => @off})
                             @returnPlurk["plurks"].each do |got| 
                                 $all_pattern.each_key do |key|
@@ -37,7 +37,6 @@ def autoReplurk
                                     end
                                 end
                             end
-                            sleep 2
                         end
                  }
     return @tid
