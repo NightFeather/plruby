@@ -14,7 +14,7 @@ def readFile
         line.chomp!
         case line
             when /^==/
-                $all_pattern[@loadin].flatten.compact
+                unless @loadin then $all_pattern[@loadin].flatten.compact end
                 @loadin = line[2..-1]
                 $all_pattern[@loadin] = []
             when /^#/
