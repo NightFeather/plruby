@@ -16,6 +16,7 @@ Thread.new {
         $log.write
         if $log.tname.day != comp.day
             $log.logger("Start changing LogFile!")
+            $log.write
             $log.update_file
             $log.logger("LogFile have changed! A brand new day comes!")
         end

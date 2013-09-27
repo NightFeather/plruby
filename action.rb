@@ -14,6 +14,7 @@ def readFile
         case line
             when /^==/
                 @loadin = line[2..-1]
+                $all_pattern[@loadin] = []
             when /^#/
             else
                 $all_pattern[@loadin] << line
