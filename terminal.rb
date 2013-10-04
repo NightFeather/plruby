@@ -29,6 +29,14 @@ class Terminal
                     out "Usage: post <content> [modifier]"
                     out "content must be quoted"
                  end
+            when /resp/i
+                if parsedCmd[1] && parsedCmd[2]
+                    plurk_id ,content = parsedCmd[1].to_i, parsedCmd[2]
+                    $plurk.resp(plurk_id,parsedCmd[2])
+                 else
+                    out "Usage: post <plurk_Id> <content> [modifier]"
+                    out "content and plurk_Id must be quoted"
+                 end
             when /start/i
                 worker(parsedCmd[1],parsedCmd[2..-1])
             when /stop/i

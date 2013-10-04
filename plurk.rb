@@ -51,8 +51,8 @@ class Plurk
         json = $plurk.req('/APP/Timeline/plurkAdd',{:content=>@content, :qualifier=>@qualifier, :lang=>@lang},)
     end
     
-    def res( id, content, qualifier = ":" )
+    def resp( id, content, qualifier = ":" )
         @id, @content, @qualifier = id, content, qualifier
-        $plurk.req('/APP/Responses/responseAdd',{:id=>@id, :content=>@content, :qualifier=>@qualifier},)
+        $plurk.req('/APP/Responses/responseAdd',{:plurk_id=>@id, :content=>@content, :qualifier=>@qualifier},)
     end
 end

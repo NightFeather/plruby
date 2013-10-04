@@ -14,10 +14,11 @@ def readFile
         line.chomp!
         case line
             when /^==/
-                unless @loadin then $all_pattern[@loadin].flatten.compact end
+                unless @loadin then $all_pattern[@loadin].flatten!.compact! end
                 @loadin = line[2..-1]
                 $all_pattern[@loadin] = []
             when /^#/
+                #Do Nothing
             else
                 $all_pattern[@loadin] << line
         end
@@ -33,12 +34,15 @@ def autoReplurk
                             @off = parseTime( (Time.new).utc )
                             sleep 2
                             @returnPlurk = $plurk.req("/APP/Polling/getPlurks",{:offset => @off})
-                            @returnPlurk["plurks"].each do |got| 
-                                $all_pattern.each_key do |key|
-                                    if got["content_raw"] =~ /#{key}/
-                                        $plurk.resp(got["plurk_id"],all_pattern[key][rand(all_pattern[key].lengh)])
+                            if @returnPlurk["plurks"].length
+                                @returnPlurk["plurks"].each do |got|
+                                    $all_pattern.each_key do |key|
+                                        if (got["content_raw"] =~ /#{key}/) != nil
+                                            p $plurk.resp(got["plurk_id"].to_i,$all_pattern[key][rand($all_pattern[key].length)])
+                                        end
                                     end
                                 end
+                                $log.logger("aResp One cycle done.")
                             end
                         end
                  }
