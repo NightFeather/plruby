@@ -67,7 +67,7 @@ class Terminal
                 $log.logger ("Terminal Interface Ended.")
                 $log.write
                 out "exiting....", "CYN"
-                break
+                exit
             else
                 out "Command not found." , "RED"
                 out "Enter \"help\" for avalible command list."

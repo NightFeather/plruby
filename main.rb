@@ -6,6 +6,10 @@ require './terminal.rb'
 require './constants.rb'
 require './log.rb'
 
+trap("TERM") do
+  puts "I need to go because system going down"
+end
+
 $plurk = Plurk.new(Consts::Apk, Consts::Aps)
 $plurk.authorize(Consts::Act, Consts::Acs)
 
