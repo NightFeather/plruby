@@ -13,4 +13,4 @@
 |**action.rb** |預計預寫些行為定義|
 |**main.rb** |顧名思義的主程式行為|
 |**terminal.rb** |吃終端機指令處理|
-|**gen.rb**|生 settings.rb 用|
+|**gen.rb**|生 setting.rb 用|

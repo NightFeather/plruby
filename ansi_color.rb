@@ -22,7 +22,7 @@ def ConColor (f = nil, b = nil, s = nil)
                     when /BLU/ then BLU.to_s
                     when /MAG/ then MAG.to_s
                     when /CYN/ then CYN.to_s
-                    when /WHI/ then WHI.to_s                 
+                    when /WHI/ then WHI.to_s
                   end
         if @b
             output += ';'

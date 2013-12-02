@@ -1,14 +1,18 @@
 #!/usr/bin/env ruby 
 # encoding: utf-8
 
+require './gen.rb'
+
+if !File.exist?("setting.rb")
+    gen = Gen.new
+    gen.getSetting
+    gen.writeSetting
+end
+
+require './setting.rb'
 require './plurk.rb'
 require './terminal.rb'
-require './constants.rb'
 require './log.rb'
-
-trap("TERM") do
-  puts "I need to go because system going down"
-end
 
 $plurk = Plurk.new(Consts::Apk, Consts::Aps)
 $plurk.authorize(Consts::Act, Consts::Acs)
@@ -24,9 +28,23 @@ Thread.new {
             $log.update_file
             $log.logger("LogFile have changed! A brand new day comes!")
         end
-        sleep 60
+        sleep 30
     end
 }
+
+def quit(mesg)
+    @mesg = mesg
+    $log.logger @mesg
+    $log.write
+    exit
+end
+
+trap("TERM") do
+    quit "I need to go because system going down."
+end
+trap("INT") do
+    quit "Forced Shutdown by ctrl-c."
+end
 
 unless ARGV[0]
     terminal = Terminal.new

@@ -2,7 +2,7 @@
 require './log.rb'
 require './plurk.rb'
 require './ansi_color.rb'
-require './constants.rb'
+require './setting.rb'
 require './action.rb'
 
 class Terminal
@@ -12,13 +12,13 @@ class Terminal
         $thread_list = {}
     end
     def out ( input , hcolor = "GRE" ,n=1)
-        print ConColor(hcolor) + input.to_s + ConColor() + ("\n"*n)
+        print ConColor(hcolor,nil,1) + input.to_s + ConColor() + ("\n"*n)
     end
     def console
         while true
             sleep 0.1
             out(@prompt,"YEL",0)
-            cmd = readline.chomp
+            cmd = readline.chomp!
             parsedCmd = (cmd.scan /(\w+)|"([^"']+?)"|'([^"']+?)'/).flatten.compact
             case parsedCmd[0]
             when /post/i
@@ -64,10 +64,8 @@ class Terminal
                 out  "exit  => Leave this console"
                 out  "help  => Show this message"
             when /exit/i
-                $log.logger ("Terminal Interface Ended.")
-                $log.write
                 out "exiting....", "CYN"
-                exit
+                quit "Terminal Interface Ended."
             else
                 out "Command not found." , "RED"
                 out "Enter \"help\" for avalible command list."

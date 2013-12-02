@@ -11,8 +11,9 @@ class Log
         @log_s = []
         @s_lengh = 0
     end
+
     attr_reader :tname
-#作為背景資訊緩衝 -- 對應指令 log
+
     def logger( n = nil )
         if n
            @log_t = Time.new
@@ -22,12 +23,15 @@ class Log
            return @log_s.join
         end
     end
+
     def write
         if @s_lengh < @log_s.count
             @f << @log_s[@s_lengh..@log_s.count].join
+            @f.flush
             @s_lengh = @log_s.count
         end
     end
+    
     def update_file
         @f.close
         log_open

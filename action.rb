@@ -32,12 +32,14 @@ def autoReplurk
     @tid = Thread.new {
                         while true
                             @off = parseTime( (Time.new).utc )
+                            puts @off
                             sleep 2
                             @returnPlurk = $plurk.req("/APP/Polling/getPlurks",{:offset => @off})
                             if @returnPlurk["plurks"].length
                                 @returnPlurk["plurks"].each do |got|
                                     $all_pattern.each_key do |key|
                                         if (got["content_raw"] =~ /#{key}/) != nil
+                                            p got
                                             p $plurk.resp(got["plurk_id"].to_i,$all_pattern[key][rand($all_pattern[key].length)])
                                         end
                                     end
@@ -74,7 +76,7 @@ def testing (in_str)
                             sleep 60
                         end
                     end
-                    $log.logger("Testing Work Self Ended.")
+                    $log.logger("Testing Work Self Ended Due to Some Reasons")
                     $plurk.post("Errr, Something Offline?")
                 }
     return @tid
