@@ -1,21 +1,7 @@
 #!/usr/bin/env ruby 
 # encoding: utf-8
 
-require './gen.rb'
-
-if !File.exist?("setting.rb")
-    gen = Gen.new
-    gen.getSetting
-    gen.writeSetting
-end
-
-require './setting.rb'
-require './plurk.rb'
-require './terminal.rb'
 require './log.rb'
-
-$plurk = Plurk.new(Consts::Apk, Consts::Aps)
-$plurk.authorize(Consts::Act, Consts::Acs)
 
 $log = Log.new
 Thread.new {
@@ -32,21 +18,43 @@ Thread.new {
     end
 }
 
-def quit(mesg)
+def quit(*mesg)
     @mesg = mesg
+    @mesg = @mesg.join "\n"
     $log.logger @mesg
     $log.write
     exit
 end
 
 trap("TERM") do
+    print "\n"
     quit "I need to go because system going down."
 end
 trap("INT") do
+    print "\n"
     quit "Forced Shutdown by ctrl-c."
 end
 
-unless ARGV[0]
-    terminal = Terminal.new
-    terminal.console
+require './gen.rb'
+
+if !File.exist?("setting.rb")
+    gen = Gen.new
+    gen.getSetting
+    gen.writeSetting
+end
+
+require './setting.rb'
+require './plurk.rb'
+require './terminal.rb'
+
+$plurk = Plurk.new(Consts::Apk, Consts::Aps)
+$plurk.authorize(Consts::Act, Consts::Acs)
+
+begin
+    unless ARGV[0]
+        terminal = Terminal.new
+        terminal.console
+    end 
+rescue
+    quit $!,$@
 end

@@ -39,8 +39,7 @@ def autoReplurk
                                 @returnPlurk["plurks"].each do |got|
                                     $all_pattern.each_key do |key|
                                         if (got["content_raw"] =~ /#{key}/) != nil
-                                            p got
-                                            p $plurk.resp(got["plurk_id"].to_i,$all_pattern[key][rand($all_pattern[key].length)])
+                                            $plurk.resp(got["plurk_id"].to_i,$all_pattern[key][rand($all_pattern[key].length)])
                                         end
                                     end
                                 end
@@ -61,24 +60,24 @@ def testing (in_str)
     @base = @in_str.length > 24 ? 24 : @in_str.length
     $log.logger("Karma_Hold Started with patterns : %s " % [(@in_str.join " ")])
     @tid = Thread.new {
-                    $plurk.post("Errr, Something Online?")
-                    while @dummy <5
-                        begin
-                            time = Time.new
-                            if time.hour%(24/@base) ==0 && time.min == 0
-                                $plurk.post(@in_str[time.hour/(24/@base)])
-                                @dummy = 0
-                            end
-                                sleep 60
-                        rescue
-                            @dummy += 1
-                            $log.logger("Hourly post failed. Network issue?")
-                            sleep 60
+                $plurk.post("Errr, Something Online?")
+                while @dummy <5
+                    begin
+                        time = Time.new
+                        if time.hour%(24/@base) ==0 && time.min == 0
+                            $plurk.post(@in_str[time.hour/(24/@base)])
+                            @dummy = 0
                         end
+                            sleep 60
+                    rescue
+                        @dummy += 1
+                        $log.logger("Hourly post failed. Network issue?")
+                        sleep 60
                     end
-                    $log.logger("Testing Work Self Ended Due to Some Reasons")
-                    $plurk.post("Errr, Something Offline?")
-                }
+                end
+                $log.logger("Testing Work Self Ended Due to Some Reasons")
+                $plurk.post("Errr, Something Offline?")
+            }
     return @tid
 end
 #/

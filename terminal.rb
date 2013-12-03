@@ -21,6 +21,8 @@ class Terminal
             cmd = readline.chomp!
             parsedCmd = (cmd.scan /(\w+)|"([^"']+?)"|'([^"']+?)'/).flatten.compact
             case parsedCmd[0]
+            when /get/i
+                p $plurk.req("/APP/Polling/getPlurks",{:offset => parseTime( (Time.new).utc )})
             when /post/i
                 if parsedCmd[1]
                     content = parsedCmd[1]
@@ -57,6 +59,7 @@ class Terminal
             when /log/i
                 print $log.logger
             when /help/i
+                out  "get   => get plurks"
                 out  "post  => Plurks a message"
                 out  "log   => Show log"
                 out  "start => Start a bot thread"
@@ -67,8 +70,10 @@ class Terminal
                 out "exiting....", "CYN"
                 quit "Terminal Interface Ended."
             else
-                out "Command not found." , "RED"
-                out "Enter \"help\" for avalible command list."
+                if parsedCmd[0]
+                    out "Command not found." , "RED"
+                    out "Enter \"help\" for avalible command list."
+                end
             end
         end
     end

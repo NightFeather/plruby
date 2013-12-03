@@ -20,7 +20,11 @@ class Gen
         puts "Settings You've Entered："
         @setting.each {|name,value| puts name + ":\t" + ( value ? value : "<< Not Setted >>" )}
         print "結束設定？[Y/n] "
-            if readline.chomp! =~ /n/i then getSetting end
+        if readline.chomp! =~ /n/i
+            getSetting 
+        else
+            writeSetting
+        end
     end
 
     def writeSetting
