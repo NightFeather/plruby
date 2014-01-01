@@ -3,7 +3,7 @@ require './ansi_color.rb'
 require './log.rb'
 
 def parseTime( org )
-    return @ptime = "%04d-%02d-%02dT%02d:%02d:%02d" % [org.year,org.mon,org.day,org.hour,(org.min-5),org.sec]
+    return @ptime = "%04d-%02d-%02dT%02d:%02d:%02d" % [org.year,org.mon,org.day,org.hour,org.min,org.sec]
 end
 
 def readFile
@@ -34,7 +34,7 @@ def autoReplurk
                             @off = parseTime( (Time.new).utc )
                             puts @off
                             sleep 2
-                            @returnPlurk = $plurk.req("/APP/Polling/getPlurks",{:offset => @off})
+                            @returnPlurk = $plurk.req("/APP/Polling/getPlurks",{:offset => @off,:limit => 20})
                             if @returnPlurk["plurks"].length
                                 @returnPlurk["plurks"].each do |got|
                                     $all_pattern.each_key do |key|
