@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby 
 # encoding: utf-8
 
-require './log.rb'
+load './log.rb'
 
 $log = Log.new
 Thread.new {
@@ -47,8 +47,8 @@ require './setting.rb'
 require './plurk.rb'
 require './terminal.rb'
 
-$plurk = Plurk.new(Consts::Apk, Consts::Aps)
-$plurk.authorize(Consts::Act, Consts::Acs)
+$plurk = Plurk.new(keys[:apk], keys[:aps])
+$plurk.authorize(keys[:act], keys[:acs])
 
 begin
     unless ARGV[0]
@@ -56,5 +56,7 @@ begin
         terminal.console
     end 
 rescue
-    quit $!,$@
+    puts "Unhandled Error Occured : " + $!.to_s
+    puts "Check the logfile for more Information!!!"
+    quit "Error: " + $!.to_s,"Backtrace: ",$@
 end

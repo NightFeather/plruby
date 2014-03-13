@@ -36,4 +36,7 @@ class Log
         @f.close
         log_open
     end
+
+    def pack_log
+    end
 end

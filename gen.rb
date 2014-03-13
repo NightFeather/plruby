@@ -28,8 +28,8 @@ class Gen
     end
 
     def writeSetting
-        @content << "module Consts"
-        @setting.each { |name,value| @content << name + " = " + "\'" +  value + "\'" }
+        @content << "module Settings"
+        @setting.each { |name,value| @content << "\t" + name + " = " + "\'" +  value + "\'" }
         @content << "end"
         @f = File.new("setting.rb","w")
         @f.write (@content.join "\n")
